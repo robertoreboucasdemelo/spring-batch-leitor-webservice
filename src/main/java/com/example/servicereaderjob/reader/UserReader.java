@@ -57,14 +57,15 @@ public class UserReader implements ItemReader<User> {
 	
 	@BeforeChunk
 	private void beforeChunk(ChunkContext context) {
-		for (int i = 0; i < chunkSize; i += pageSize) {
-			if (total >= limit) return;
-			
-			List<User> usersData = fetchUserDataFromAPI();
-			users.addAll(usersData);
-			total += usersData.size();
-			page++;
-		}
+	  for (int i = 0; i < chunkSize; i += pageSize) {
+		  if (total >= limit) {
+			  return;  
+		  }
+			  
+		  users.addAll(fetchUserDataFromAPI());
+		  total += pageSize; 
+		  page++;
+	  }
 	}
 	
 	@AfterChunk
